@@ -3,15 +3,15 @@ import { useCallback } from 'react';
 const LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
 export default function useAI() {
-  const evaluate = (b, ai, hu) => {
+  const evaluate = useCallback((b, ai, hu) => {
     for (let [a,b_,c] of LINES) {
       if (b[a] && b[a] === b[b_] && b[a] === b[c])
         return b[a] === ai ? 10 : -10;
     }
     return 0;
-  };
+  }, []); // لا تعتمد على أي قيمة متغيرة
 
-  const alphabeta = (b, d, a, beta, max, ai, hu) => {
+  const alphabeta = useCallback((b, d, a, beta, max, ai, hu) => {
     const s = evaluate(b, ai, hu);
     if (s === 10) return s - d;
     if (s === -10) return s + d;
@@ -40,7 +40,7 @@ export default function useAI() {
       }
       return best;
     }
-  };
+  }, [evaluate]); // تعتمد على evaluate فقط
 
   const getMove = useCallback((board, diff, ai = 'O') => {
     const moves = board.map((c, i) => c ? null : i).filter(i => i !== null);
@@ -61,7 +61,7 @@ export default function useAI() {
       if (score > best) { best = score; bestMove = m; }
     }
     return bestMove;
-  }, []);
+  }, [alphabeta]); // الآن alphabeta مستقرة، لذا التبعية مستقرة أيضاً
 
   return { getMove };
 }
