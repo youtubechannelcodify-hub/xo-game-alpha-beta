@@ -1,0 +1,27 @@
+$primary: #6c5ce7;
+$secondary: #a8a4e6;
+$success: #00b894;
+$warning: #fdcb6e;
+$bg: #0a0a1a;
+$text: #dfe6e9;
+$radius: 10px;
+$font: 'Segoe UI', sans-serif;
+$mobile: 768px;
+
+@mixin glass {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+@mixin button($bg: $primary) {
+  background: $bg;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: $radius;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  &:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba($bg, 0.4); }
+}
