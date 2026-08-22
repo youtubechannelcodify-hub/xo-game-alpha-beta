@@ -9,8 +9,8 @@ export default function useAI() {
         return b[a] === ai ? 10 : -10;
     }
     return 0;
-  }, []); // لا تعتمد على أي قيمة متغيرة
-
+  }, []);  
+  
   const alphabeta = useCallback((b, d, a, beta, max, ai, hu) => {
     const s = evaluate(b, ai, hu);
     if (s === 10) return s - d;
